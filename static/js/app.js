@@ -18,7 +18,7 @@ function init() {
 
   //********************************************/
   // Populate data in test subject select dropdown list
-  //********************************************/
+
   // Select d3 input element
   const subjectselect = d3.select("#selDataset");
 
@@ -28,7 +28,7 @@ function init() {
     option.text(namevalue);
     option.attr("value",namevalue);
   });
- //*************************************************/ */
+  //*************************************************/
  
   let sampvalues = justsamples[0].sample_values;
   //console.log(sampvalues);
@@ -75,21 +75,50 @@ function init() {
 
   // // Apply the group bar mode to the layout
   var layout = {
-    title: "Top 10 OTUs found in the individual "
+    title: "Top 10 OTUs found in the individual subject"
   };
 
-  // // Render the plot to the div tag with id "bar"
+  // Render the plot to the div tag with id "bar"
   Plotly.newPlot(CHART, chartData, layout);
+  
+  // Bubble chart 
+  var trace1 = {
+    x: justsamples[0].otu_ids,
+    y: justsamples[0].sample_values,
+    text: justsamples[0].otu_labels,
+    mode: 'markers',
+    marker: {
+      size: justsamples[0].sample_values,
+      color: justsamples[0].otu_ids
+    }
+  };
+  
+  var data = [trace1];
+  
+  var layout = {
+    title: 'All samples taken for the individual subject',
+    showlegend: false
+  };
+    Plotly.newPlot('bubble', data, layout);
+
+  //Demographic Data
+  d3.select("#sample-metadata").append("p").text('ID: '+ justmetadata[0].id);
+  d3.select("#sample-metadata").append("p").text('Ethnicity: '+ justmetadata[0].ethnicity);
+  d3.select("#sample-metadata").append("p").text('Gender: '+ justmetadata[0].gender);
+  d3.select("#sample-metadata").append("p").text('Age: '+ justmetadata[0].age);
+  d3.select("#sample-metadata").append("p").text('Location: '+ justmetadata[0].location);
+  d3.select("#sample-metadata").append("p").text('Bbtype: '+ justmetadata[0].bbtype);
+  d3.select("#sample-metadata").append("p").text('Wfreq: '+ justmetadata[0].wfreq);
   });
-};
+};  
+// End of init() function
+//******************************************************/
 
 // Call updatePlotly() when a change takes place to the DOM
 d3.selectAll("body").on("change", updatePlotly);
 
-// Use D3 to select the dropdown menu
-// var dropdownMenu = d3.select("#selDataset");
-// Assign the value of the dropdown menu option to a variable
 var CHART = d3.selectAll("#bar").node();
+
 // This function is called when a dropdown menu item is selected
 function updatePlotly() {
   // Use D3 to select the dropdown menu
@@ -139,6 +168,38 @@ function updatePlotly() {
   Plotly.restyle(CHART, "x", [x]);
   Plotly.restyle(CHART, "y", [y]);
   Plotly.restyle(CHART, "text", [text]);
+
+  //************************************************************* */
+  //Bubblechart Restyle
+  var trace1 = {
+    x: justsamples[subjectindex].otu_ids,
+    y: justsamples[subjectindex].sample_values,
+    text: justsamples[subjectindex].otu_labels,
+    mode: 'markers',
+    marker: {
+      size: justsamples[subjectindex].sample_values,
+      color: justsamples[subjectindex].otu_ids
+    }
+  };
+  
+  var data = [trace1];
+  
+  var layout = {
+    title: 'All samples taken for the individual subject',
+    showlegend: false
+  };
+  
+  Plotly.newPlot('bubble', data, layout);
+
+  //Demographic Data Refresh
+  d3.select("#sample-metadata").selectAll('p').remove();
+  d3.select("#sample-metadata").append("p").text('ID: '+ justmetadata[subjectindex].id);
+  d3.select("#sample-metadata").append("p").text('Ethnicity: '+ justmetadata[subjectindex].ethnicity);
+  d3.select("#sample-metadata").append("p").text('Gender: '+ justmetadata[subjectindex].gender);
+  d3.select("#sample-metadata").append("p").text('Age: '+ justmetadata[subjectindex].age);
+  d3.select("#sample-metadata").append("p").text('Location: '+ justmetadata[subjectindex].location);
+  d3.select("#sample-metadata").append("p").text('Bbtype: '+ justmetadata[subjectindex].bbtype);
+  d3.select("#sample-metadata").append("p").text('Wfreq: '+ justmetadata[subjectindex].wfreq);
 }
 // End of updatePlotly()
 
