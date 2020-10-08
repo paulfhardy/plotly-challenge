@@ -8,6 +8,7 @@ https://paulfhardy.github.io/plotly-challenge/
 The github repository is:
 https://github.com/paulfhardy/plotly-challenge
 
+The bonus challenge was also completed.
 
 ### Step 1: Plotly
 
