@@ -109,7 +109,7 @@ function init() {
     d3.select("#sample-metadata").append("p").text('Wfreq: '+ justmetadata[0].wfreq);
   
    //************************************/
-   // Belly button warhing Gauge chart 
+   // Belly button washing Gauge chart 
    //************************************/
       var data = [
         {
@@ -137,6 +137,7 @@ function init() {
       
       var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
       Plotly.newPlot('gauge', data, layout);
+
   //End Belly button gauge chart//
 
   });
@@ -192,7 +193,7 @@ function updatePlotly() {
     Plotly.restyle(CHART, "text", [text]);
 
   //***********************************
-  // Re-pPlot the Bubble chart  
+  // Re-Plot the Bubble chart  
   //***********************************
     var trace1 = {
       x: justsamples[subjectindex].otu_ids,
@@ -226,36 +227,16 @@ function updatePlotly() {
     d3.select("#sample-metadata").append("p").text('Bbtype: '+ justmetadata[subjectindex].bbtype);
     d3.select("#sample-metadata").append("p").text('Wfreq: '+ justmetadata[subjectindex].wfreq);
 
-   //************************************/
-   // Belly button warhing Gauge chart 
-   //************************************/
-   var data = [
-    {
-      domain: { x: [0, 1], y: [0, 1] },
-      value: justmetadata[subjectindex].wfreq,
-      title: { text: "Belly Button Washing Frequency (Scrubs per week)" },
-      type: "indicator",
-      mode: "gauge+number",
-      gauge: {
-        axis: { range: [0, 9] },
-        steps: [
-          { range: [0, 1], color: "lightgray" },
-          { range: [1, 2], color: "gray" },
-          { range: [2, 3], color: "lightgray" },
-          { range: [3, 4], color: "gray" },
-          { range: [4, 5], color: "lightgray" },
-          { range: [5, 6], color: "gray" },
-          { range: [6, 7], color: "lightgray" },
-          { range: [7, 8], color: "gray" },
-          { range: [8, 9], color: "lightgray" }
-        ],
-      }
-    }
-  ];
+   //*****************************************/
+   // Belly button washing Gauge chart restyle
+   //*****************************************/
   
-  var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
-  Plotly.newPlot('gauge', data, layout);
-//End Belly button gauge chart//
+    var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+
+    value = justmetadata[subjectindex].wfreq;
+    Plotly.restyle('gauge', "value", [value]);
+
+    //End Belly button gauge chart//
 
 }
 // End of updatePlotly()
