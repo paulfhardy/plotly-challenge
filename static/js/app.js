@@ -85,7 +85,8 @@ function init() {
     mode: 'markers',
     marker: {
       size: justsamples[0].sample_values,
-      color: justsamples[0].otu_ids
+      color: justsamples[0].otu_ids,
+      colorscale: [[0,'rgb(0,0,255)'],[1,'rgb(255,0,0)']]
     }
   };
   
@@ -202,7 +203,8 @@ function updatePlotly() {
       mode: 'markers',
       marker: {
         size: justsamples[subjectindex].sample_values,
-        color: justsamples[subjectindex].otu_ids
+        color: justsamples[subjectindex].otu_ids,
+        colorscale: [[0,'rgb(0,0,255)'],[1,'rgb(255,0,0)']]
       }
     };
     
