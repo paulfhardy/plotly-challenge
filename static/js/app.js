@@ -59,7 +59,6 @@ function init() {
     x: sampvalues,
     y: otuidslist,
     text: otulabels,
-  //   name: "Greek",
     type: "bar",
     orientation: "h"
   };
