@@ -109,41 +109,15 @@ function init() {
     d3.select("#sample-metadata").append("p").text('Bbtype: '+ justmetadata[0].bbtype);
     d3.select("#sample-metadata").append("p").text('Wfreq: '+ justmetadata[0].wfreq);
   
-   //************************************/
-   // Belly button washing Gauge chart 
-   //************************************/
-      var data = [
-        {
-          domain: { x: [0, 1], y: [0, 1] },
-          value: justmetadata[0].wfreq,
-          title: { text: "Belly Button Washing Frequency (Scrubs per week)" },
-          type: "indicator",
-          mode: "gauge+number",
-          gauge: {
-            axis: { range: [0, 9] },
-            steps: [
-              { range: [0, 1], color: "lightgray" },
-              { range: [1, 2], color: "gray" },
-              { range: [2, 3], color: "lightgray" },
-              { range: [3, 4], color: "gray" },
-              { range: [4, 5], color: "lightgray" },
-              { range: [5, 6], color: "gray" },
-              { range: [6, 7], color: "lightgray" },
-              { range: [7, 8], color: "gray" },
-              { range: [8, 9], color: "lightgray" }
-            ],
-          }
-        }
-      ];
-      
-      var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
-      Plotly.newPlot('gauge', data, layout);
-
-  //End Belly button gauge chart//
-
+   //***********************************************
+   // Plot the Belly button washing Gauge chart 
+   //***********************************************
+     initGaugeChart();
   });
 };  
 // End of init() function
+
+
 //***********************************************************
 // Call updatePlotly() when a change takes place to the DOM
 //***********************************************************
@@ -176,7 +150,7 @@ function updatePlotly() {
     otulabels = otulabels.slice(0,10);
 
   // Format OTU ID string
-   let otuidslist = otuids.map(otuid => 'OTU ' + otuid);
+    let otuidslist = otuids.map(otuid => 'OTU ' + otuid);
 
   // Reverse the array due to Plotly's defaults
     sampvalues = sampvalues.reverse();
@@ -188,7 +162,9 @@ function updatePlotly() {
     y = otuidslist;
     text = otulabels;
 
-  // Restyle the chart
+  //***********************************
+  // Re-style the Bar chart  
+  //***********************************
     Plotly.restyle(CHART, "x", [x]);
     Plotly.restyle(CHART, "y", [y]);
     Plotly.restyle(CHART, "text", [text]);
@@ -217,7 +193,7 @@ function updatePlotly() {
     
     Plotly.newPlot('bubble', data, layout);
 
-  // Demographic Data Refresh after clearing the previously selected demographic data
+  // Demographic Data Refresh after first clearing the previously selected/updated demographic data
 
     d3.select("#sample-metadata").selectAll('p').remove();
 
@@ -229,17 +205,11 @@ function updatePlotly() {
     d3.select("#sample-metadata").append("p").text('Bbtype: '+ justmetadata[subjectindex].bbtype);
     d3.select("#sample-metadata").append("p").text('Wfreq: '+ justmetadata[subjectindex].wfreq);
 
-   //*****************************************/
-   // Belly button washing Gauge chart restyle
-   //*****************************************/
-  
-    var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+   //*******************************************************************
+   // Call function to restyle Belly button washing Gauge chart restyle
+   //*******************************************************************
 
-    value = justmetadata[subjectindex].wfreq;
-    Plotly.restyle('gauge', "value", [value]);
-
-    //End Belly button gauge chart//
-
+    restyleGaugeChart(subjectindex);
 }
 // End of updatePlotly()
 
